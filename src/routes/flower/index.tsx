@@ -1,10 +1,17 @@
-import { component$, useClientEffect$, useStore, useStylesScoped$ } from '@builder.io/qwik';
-import { DocumentHead, useLocation } from '@builder.io/qwik-city';
-import styles from './flower.css?inline';
+import {
+  component$,
+  useClientEffect$,
+  useStore,
+  useStylesScoped$,
+} from "@builder.io/qwik";
+import { DocumentHead, useLocation } from "@builder.io/qwik-city";
+import styles from "./flower.css?inline";
 
 export default component$(() => {
   useStylesScoped$(styles);
   const loc = useLocation();
+
+  console.warn(loc.query.get("pride"));
 
   const state = useStore({
     count: 0,
@@ -31,11 +38,11 @@ export default component$(() => {
       />
       <div
         style={{
-          '--state': `${state.count * 0.1}`,
+          "--state": `${state.count * 0.1}`,
         }}
         class={{
           host: true,
-          pride: loc.query['pride'] === 'true',
+          pride: loc.query.get("pride"),
         }}
       >
         {Array.from({ length: state.number }, (_, i) => (
@@ -45,7 +52,7 @@ export default component$(() => {
               square: true,
               odd: i % 2 === 0,
             }}
-            style={{ '--index': `${i + 1}` }}
+            style={{ "--index": `${i + 1}` }}
           />
         )).reverse()}
       </div>
@@ -54,5 +61,5 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: 'Qwik Flower',
+  title: "Qwik Flower",
 };
